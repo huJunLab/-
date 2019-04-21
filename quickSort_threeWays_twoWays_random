@@ -1,0 +1,70 @@
+
+template<typename T>
+int __apartion(T arr[], int l, int r){
+
+	swap(arr[l], arr[rand() % (r - l + 1)+l]);
+	T v = arr[l];
+	int i = l + 1;
+	int j = r;
+//单向
+// 	for (int i = l + 1; i <= r; i++){
+// 		if (arr[i] < v){
+// 			swap(arr[j+1], arr[i]);
+// 			j++;
+// 		}
+// 	}
+
+//双向
+	while (i < j){
+		while (i <= r && arr[i] < v)
+			i++;
+		while (j > l + 1 && arr[j] > v)
+			j--;
+
+		swap(arr[i], arr[j]);
+		i++;
+		j--;
+	}
+	swap(arr[l], arr[j]);
+	return j;
+}
+
+template<typename T>
+void __quickSort(T arr[], int l, int r){
+	
+	if (l >= r)
+		return;
+	
+	swap(arr[l], arr[rand() % (r - l + 1) + l]);
+	
+	T v = arr[l];
+	int i = l + 1;
+	int lt = l;
+	int gt = r + 1;
+	
+	while (i < gt){
+		if (arr[i] < v){
+			swap(arr[i], arr[lt + 1]);
+			lt++;
+			i++;
+		}
+		else if (arr[i] > v){
+			swap(arr[i], arr[gt - 1]);
+			gt--;
+		}
+		else{
+			i++;
+		}
+	}
+
+	__quickSort(arr, l, lt);
+	__quickSort(arr, gt, r);
+
+}
+
+template<typename T>
+void quickSort(T arr[], int n){
+
+	srand((unsigned)time(NULL));
+	__quickSort(arr, 0, n - 1);
+}
